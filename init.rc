@@ -12,7 +12,6 @@ import /init.${ro.zygote}.rc
 import /init.rilcommon.rc
 import /init.container.rc
 import /init.fac.rc
-import /init.volt.rc
 
 on early-init
     # Set init and its forked children's oom_adj.
@@ -358,6 +357,10 @@ on late-init
     # issued fs triggers have completed.
     trigger load_system_props_action
 
+    # Now we can mount /data. File encryption requires keymaster to decrypt
+    # /data, which in turn can only be loaded when system properties are present
+    trigger post-fs-data
+    trigger load_persist_props_action
 
     # Remove a file to wake up anything waiting for firmware.
     trigger firmware_mounts_complete
@@ -462,6 +465,10 @@ on post-fs-data
     # start debuggerd to make debugging early-boot crashes easier.
     start debuggerd
     start debuggerd64
+
+    # Make sure we have the device encryption key.
+    start vold
+    installkey /data
 
     # Start bootcharting as soon as possible after the data partition is
     # mounted to collect more data.
@@ -1311,10 +1318,4 @@ on property:persist.security.tlc.otp=1
 service sensorhubservice /system/bin/sensorhubservice
     class main
     user system
-    group input
-
-service post-init /sbin/volt.sh
-    class late_start
-    user root
-    seclabel u:r:init:s0
-    oneshot
+    group input	

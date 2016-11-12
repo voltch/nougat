@@ -254,23 +254,6 @@ on boot
     chown system system /sys/devices/system/cpu/cpu6/online
     chown system system /sys/devices/system/cpu/cpu7/online
 
-    # Turn on CPU cores
-    write /sys/power/cpuhotplug/enabled 0
-    write /sys/devices/system/cpu/cpu1/online 1
-    write /sys/devices/system/cpu/cpu2/online 1
-    write /sys/devices/system/cpu/cpu3/online 1
-    write /sys/devices/system/cpu/cpu4/online 1
-    write /sys/devices/system/cpu/cpu5/online 1
-    write /sys/devices/system/cpu/cpu6/online 1
-    write /sys/devices/system/cpu/cpu7/online 1
-
-    # Boost frequency
-    write /sys/devices/system/cpu/cpu0/cpufreq/volt_min_freq 1586000
-    write /sys/devices/system/cpu/cpu4/cpufreq/volt_min_freq 2496000
-
-    # Use more optimized nr_requests for UFS
-    write /sys/block/sda/queue/nr_requests 256
-
     # CPU Idle
     chown system system /sys/module/cpuidle_exynos64/parameters/enable_mask
 
@@ -738,11 +721,6 @@ on property:sys.mobicoredaemon.enable=true
 on property:sys.boot_completed=1
     setprop security.semdaemonfinish 0
     start sem_daemon
-
-	write /sys/power/cpuhotplug/enabled 1
-	write /sys/devices/system/cpu/cpu0/cpufreq/volt_min_freq 130000
-	write /sys/devices/system/cpu/cpu4/cpufreq/volt_min_freq 208000
-	write /sys/module/workqueue/parameters/power_efficient Y
 
 on property:security.semdaemonfinish=1
     stop sem_daemon
