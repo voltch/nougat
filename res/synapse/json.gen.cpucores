@@ -1,0 +1,115 @@
+#!/system/bin/sh
+
+cat << CTAG
+{
+    name:"Cpu Cores",
+    elements:[
+	{ SLiveLabel:{
+		title:"A72 big Cores live frequency",
+		refresh:500,
+		action:"live LiveCPUFrequency_big"
+	}},
+	{ SLiveLabel:{
+		title:"A53 LITTLE Cores live frequency",
+		refresh:500,
+		action:"live LiveCPUFrequency_LITTLE"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SPane:{
+		title:"Exynos Core Control",
+		description:"You can control how many core number will run on your phone. If you disable core control it wil force 8 cores online screen on. Disabling will give better ui response and game performance exchange of battery life. Other than you can control which cores will be active or disabled manually. If you want control every cores you need to first disable hotplug !"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		default:`cat /res/synapse/volt/hotplug`,
+		action:"hotplug /res/synapse/volt/hotplug",
+		values:{
+			0:"Disabled", 1:"Enabled"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SPane:{
+		title:"Control Cores",
+		description:"Make sure you DISABLE Exynos Core Control first."
+	}},
+	{ SOptionList:{
+		title:"Core 1",
+		description:"Enable or disable Core 1",
+		default:$(cat /res/synapse/volt/core1),
+		action:"core1 /res/synapse/volt/core1",
+		values:{
+			0:"Disabled", 1:"Enabled"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:"Core 2",
+		description:"Enable or disable Core 2",
+		default:$(cat /res/synapse/volt/core2),
+		action:"core2 /res/synapse/volt/core2",
+		values:{
+			0:"Disabled", 1:"Enabled"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:"Core 3",
+		description:"Enable or disable Core 3",
+		default:$(cat /res/synapse/volt/core3),
+		action:"core3 /res/synapse/volt/core3",
+		values:{
+			0:"Disabled", 1:"Enabled"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:"Core 5",
+		description:"Enable or disable Core 5",
+		default:$(cat /res/synapse/volt/core5),
+		action:"core5 /res/synapse/volt/core5",
+		values:{
+			0:"Disabled", 1:"Enabled"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:"Core 6",
+		description:"Enable or disable Core 6",
+		default:$(cat /res/synapse/volt/core6),
+		action:"core6 /res/synapse/volt/core6",
+		values:{
+			0:"Disabled", 1:"Enabled"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:"Core 7",
+		description:"Enable or disable Core 7",
+		default:$(cat /res/synapse/volt/core7),
+		action:"core7 /res/synapse/volt/core7",
+		values:{
+			0:"Disabled", 1:"Enabled"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+    ]
+}
+CTAG

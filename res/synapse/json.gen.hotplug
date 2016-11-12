@@ -1,0 +1,40 @@
+#!/system/bin/sh
+
+cat << CTAG
+{
+    name:"Hotplug",
+    elements:[
+	{ SPane:{
+		title:"Exynos Hotplug Driver Control",
+		description:"You can control max, min core behaviour with this options."
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:"Enable, Disable Hotplug Control",
+		description:"You can enable or disable hotplug controls. Result of disabling give you 8 cores online all times.\n",
+		default:$(cat /sys/power/cpuhotplug/enabled),
+		action:"generic /sys/power/cpuhotplug/enabled",
+		values:{
+			0:"Disabled", 1:"Enabled"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:"Hotplug MAX Running Core Number",
+		description:"Set the minimum frequency the CPU scales down to.\n",
+		default:$(cat /sys/power/cpuhotplug/max_online_cpu),
+		action:"generic /sys/power/cpuhotplug/max_online_cpu",
+		values:{
+			5:"5 Cores", 6:"6 Cores", 7:"7 Cores", 8:"8 Cores"
+		}
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+    ]
+}
+CTAG
